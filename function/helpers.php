@@ -185,7 +185,7 @@ function handlePaymentGatewayCommand($message, $chatId, $message_id, $gateway) {
     
     $ch = curl_init();
     curl_setopt_array($ch, [
-        CURLOPT_URL => "https://api.darkxcode.site/checker/cc-checkerV4.5/bot_tele/?cc=$cc&gate=$gateway&apikey=$apikey",
+        CURLOPT_URL => "https://api.darkxcode.shop/checker/cc-checkerV4.5/bot_tele/?cc=$cc&gate=$gateway&apikey=$apikey",
         CURLOPT_FOLLOWLOCATION => 1,
         CURLOPT_RETURNTRANSFER => 1
     ]);
