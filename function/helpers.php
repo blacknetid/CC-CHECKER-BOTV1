@@ -40,13 +40,21 @@ function handleSkCommand($message, $chatId, $message_id) {
     curl_close($ch);
     
     if (strpos($result, 'api_key_expired')) {
-        $msg = "<b>❌ DEAD KEY</b>%0A<u>KEY:</u> <code>$sec</code>%0A<u>REASON:</u> EXPIRED KEY";
+        $msg = "<b>❌ DEAD KEY</b>
+<u>KEY:</u> <code>$sec</code>
+<u>REASON:</u> EXPIRED KEY";
     } elseif (strpos($result, 'Invalid API Key provided')) {
-        $msg = "<b>❌ DEAD KEY</b>%0A<u>KEY:</u> <code>$sec</code>%0A<u>REASON:</u> INVALID KEY";
+        $msg = "<b>❌ DEAD KEY</b>
+<u>KEY:</u> <code>$sec</code>
+<u>REASON:</u> INVALID KEY";
     } elseif (strpos($result, 'testmode_charges_only') || strpos($result, 'test_mode_live_card')) {
-        $msg = "<b>❌ DEAD KEY</b>%0A<u>KEY:</u> <code>$sec</code>%0A<u>REASON:</u> Testmode Charges Only";
+        $msg = "<b>❌ DEAD KEY</b>
+<u>KEY:</u> <code>$sec</code>
+<u>REASON:</u> Testmode Charges Only";
     } else {
-        $msg = "<b>✅ LIVE KEY</b>%0A<u>KEY:</u> <code>$sec</code>%0A<u>RESPONSE:</u> SK LIVE!!";
+        $msg = "<b>✅ LIVE KEY</b>
+<u>KEY:</u> <code>$sec</code>
+<u>RESPONSE:</u> SK LIVE!!";
     }
     
     sendMessage($chatId, $msg, $message_id);
@@ -62,37 +70,51 @@ function sendMessage($chatId, $message, $message_id) {
 // Command Handlers
 
 function handleUnknownCommand($chatId, $message_id) {
-    $msg = "<b>!! FUCK OFF !!</b> %0A%0A I dont know bruh";
+    $msg = "<b>!! FUCK OFF !!</b> 
+
+ I dont know bruh";
     sendMessage($chatId, $msg, $message_id);
 }
 
 function handleStartCommand($chatId, $message_id) {
-    $msg = "<b>Hello there!!%0AType /menu to know all commands!!</b>";
+    $msg = "<b>Hello there!!
+Type /menu to know all commands!!</b>";
     sendMessage($chatId, $msg, $message_id);
 }
 
 function handleMenuCommand($chatId, $message_id) {
-    $msg = "<b> MENU </b> %0A%0A" .
-           "- !info -> for check information %0A" .
-           "- !bin -> for check BIN Card %0A" .
-           "- !stripe -> for check card gate Stripe %0A" .
-           "- !braintree for check card gate Braintree %0A" .
-           "- !vbv -> for check card gate VBV Check %0A" .
-           "- !sk -> for check SK key %0A" .
+    $msg = "<b> MENU </b> 
+
+" .
+           "- !info -> for check information 
+" .
+           "- !bin -> for check BIN Card 
+" .
+           "- !stripe -> for check card gate Stripe 
+" .
+           "- !braintree for check card gate Braintree 
+" .
+           "- !vbv -> for check card gate VBV Check 
+" .
+           "- !sk -> for check SK key 
+" .
            "- !help -> for help information";
     sendMessage($chatId, $msg, $message_id);
 }
 
 function handleInfoCommand($chatId, $userId, $firstname, $username, $message_id) {
-    $msg = "<u>ID:</u> <code>$userId</code>%0A" .
-           "<u>First Name:</u> $firstname%0A" .
+    $msg = "<u>ID:</u> <code>$userId</code>
+" .
+           "<u>First Name:</u> $firstname
+" .
            "<u>Username:</u> @$username";
     sendMessage($chatId, $msg, $message_id);
 }
 
 function handleHelpCommand($chatId, $userId, $message_id) {
     global $ownerUsername;
-    $msg = "Hi <code>$userId</code>, %0A To get the apikey for this bot to work, you can buy it from $ownerUsername";
+    $msg = "Hi <code>$userId</code>, 
+ To get the apikey for this bot to work, you can buy it from $ownerUsername";
     sendMessage($chatId, $msg, $message_id);
 }
 
@@ -146,14 +168,22 @@ function handleBinCommand($message, $chatId, $username, $message_id) {
     $emoji = $data['country']['emoji'] ?? '';
     $type = isset($data['type']) && $data['type'] === 'credit' ? 'Credit card' : 'Debit card';
     
-    $msg = '<b>BIN:</b> <code>' . $bin . '</code> 🏧%0A' .
-           '<b>STATUS:</b> VALID ✅%0A' .
-           '<b>Bank:</b> ' . $bank . ' 🏛️%0A' .
-           '<b>Country:</b> ' . $country . '' . $emoji . '%0A' .
-           '<b>Brand:</b> ' . $brand . ' ⚜️%0A' .
-           '<b>Card:</b> ' . $scheme . ' 💳%0A' .
-           '<b>Type:</b> ' . $type . ' 🔰%0A' .
-           '<b>Currency:</b> ' . $currency . ' 💰%0A' .
+    $msg = '<b>BIN:</b> <code>' . $bin . '</code> 🏧
+' .
+           '<b>STATUS:</b> VALID ✅
+' .
+           '<b>Bank:</b> ' . $bank . ' 🏛️
+' .
+           '<b>Country:</b> ' . $country . '' . $emoji . '
+' .
+           '<b>Brand:</b> ' . $brand . ' ⚜️
+' .
+           '<b>Card:</b> ' . $scheme . ' 💳
+' .
+           '<b>Type:</b> ' . $type . ' 🔰
+' .
+           '<b>Currency:</b> ' . $currency . ' 💰
+' .
            '<b>Owner:</b> @' . $username . ' 🏴‍☠️';
     
     sendMessage($chatId, $msg, $message_id);
@@ -175,7 +205,9 @@ function handlePaymentGatewayCommand($message, $chatId, $message_id, $gateway) {
     $parts = explode(" ", $message, 3);
     
     if (count($parts) < 3 || empty($parts[1]) || empty($parts[2])) {
-        $msg = "INVALID COMMAND ❌%0A%0AFORMAT: /$gateway [cc list] [apikey]";
+        $msg = "INVALID COMMAND ❌
+
+FORMAT: /$gateway [cc list] [apikey]";
         sendMessage($chatId, $msg, $message_id);
         return;
     }
@@ -280,18 +312,28 @@ function handlePaymentGatewayCommand($message, $chatId, $message_id, $gateway) {
         $statusMsg = "TOO MANY REQUESTS, PLEASE WAIT A FEW MINUTES";
     }
     
-    $msg = "<b>Status</b> ⇾ $status%0A%0A" .
-           "𝗖𝗖 ⇾ $cc 💳%0A" .
-           "𝗚𝗮𝘁𝗲𝘄𝗮𝘆 ⇾ " . strtoupper($gateway) . "%0A" .
-           "𝗥𝗲𝘀𝘂𝗹𝘁 ⇾ $statusMsg ✉️%0A";
+    $msg = "<b>Status</b> ⇾ $status
+
+" .
+           "𝗖𝗖 ⇾ $cc 💳
+" .
+           "𝗚𝗮𝘁𝗲𝘄𝗮𝘆 ⇾ " . strtoupper($gateway) . "
+" .
+           "𝗥𝗲𝘀𝘂𝗹𝘁 ⇾ $statusMsg ✉️
+";
     
     if (!empty($scheme)) {
-        $msg .= "𝗕𝗜𝗡 𝗜𝗻𝗳𝗼: $iniBIN - $scheme - $brand 🏧%0A" .
-                "𝗕𝗮𝗻𝗸: $bank 🏦%0A" .
-                "𝗖𝗼𝘂𝗻𝘁𝗿𝘆: $country $emoji%0A";
+        $msg .= "𝗕𝗜𝗡 𝗜𝗻𝗳𝗼: $iniBIN - $scheme - $brand 🏧
+" .
+                "𝗕𝗮𝗻𝗸: $bank 🏦
+" .
+                "𝗖𝗼𝘂𝗻𝘁𝗿𝘆: $country $emoji
+";
     }
     
-    $msg .= "%0A TYPE: VIP CHECK 🔥%0A OWNER: @zlaxtert 🔰";
+    $msg .= "
+ TYPE: VIP CHECK 🔥
+ OWNER: @zlaxtert 🔰";
     
     sendMessage($chatId, $msg, $message_id);
 }
